@@ -21,6 +21,7 @@ function Jukebox() {
 			this.isPaused = false;
 			pauseStatus(this)
 			$('.glyphicon-play').addClass('glyphicon-pause');
+			document.getElementById("songNext").innerText = this.playlist[this.place + 1].name;
 		} else if (this.isLoaded == true) {
 			this.playlist[this.place].pause();
 			this.isPlaying = false;
@@ -50,17 +51,43 @@ function Jukebox() {
 		this.isPaused = false;
 		$('.glyphicon-play').addClass('glyphicon-pause');
 		pauseStatus(this)
+		document.getElementById("songNext").innerText = this.playlist[this.place + 1].name;
+
 	}
 
 	this.playNext = function(name) {
 		for (var i=0;i<this.playlist.length;i++) {
 			if (name == playlist[i].name) {
 				this.place = i-1;
+				document.getElementById("songNext").innerText = this.playlist[i].name;
 			}
 		}
 	}
+
+	this.shuffle = function() {
+		shuffle(this.playlist);
+		queue(this);
+		this.place = -1;
+		this.next();
+	}
 }
 
+/**
+ * Shuffles array in place.
+ * @param {Array} a items The array containing the items.
+ */
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
+    }
+    return(a);
+}
+
+//this is what puts the "paused" next to "now playing"
 function pauseStatus(jukeboxName) {
 	if (jukeboxName.isPaused) {
 		console.log("it is paused")
@@ -132,6 +159,11 @@ $(".glyphicon-stop").click(function() {
 //next button
 $(".glyphicon-step-forward").click(function() {
 	juke.next();
+});
+
+//shuffle button
+$(".glyphicon-random").click(function() {
+	juke.shuffle();
 });
 
 //listen for each of the song class
