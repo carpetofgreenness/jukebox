@@ -114,26 +114,21 @@ function Song(name, filename, jukeboxName) {
 	this.name = name;
 	this.filename = filename;
 	jukeboxName.queueSong(this);
+	var audioElement = document.getElementById("track")
 
 	this.load = function() {
-		var audioElement = document.getElementById("track")
 		audioElement.src = this.filename;
 		audioElement.play();
-
 		document.getElementById("songname").innerText = this.name;
 	}
 
 	this.play = function() {
-		var audioElement = document.getElementById("track")
 		audioElement.play();
-
 		document.getElementById("songname").innerText = this.name;
 	}
 
 	this.pause = function() {
-		var audioElement = document.getElementById("track")
 		audioElement.pause();
-
 		document.getElementById("songname").innerText = this.name;
 	}
 }
