@@ -51,6 +51,14 @@ function Jukebox() {
 		$('.glyphicon-play').addClass('glyphicon-pause');
 		pauseStatus(this)
 	}
+
+	this.playNext = function(name) {
+		for (var i=0;i<this.playlist.length;i++) {
+			if (name == playlist[i].name) {
+				this.place = i-1;
+			}
+		}
+	}
 }
 
 function pauseStatus(jukeboxName) {
@@ -62,12 +70,12 @@ function pauseStatus(jukeboxName) {
 	}
 }
 
-function upNext(jukeboxName) {
+function queue(jukeboxName) {
 	this.juke = jukeboxName;
 	this.playlist = juke.playlist;
 	this.htmlstring = ""
 	for (var i=0;i<this.playlist.length;i++) {
-		this.htmlstring += "<p id=\"" + this.playlist[i].name + "\">" + this.playlist[i].name + "</p>";
+		this.htmlstring += "<p class=\"song\"" + i + "\">" + this.playlist[i].name + "</p>";
 	}
 	document.getElementById("upnext").innerHTML = this.htmlstring;
 }
@@ -124,4 +132,12 @@ $(".glyphicon-stop").click(function() {
 //next button
 $(".glyphicon-step-forward").click(function() {
 	juke.next();
+});
+
+//listen for each of the song class
+queue(juke);
+$("#upnext").click(function(event) {
+    var text = $(event.target).text();
+    console.log(text);
+    juke.playNext(text);
 });
