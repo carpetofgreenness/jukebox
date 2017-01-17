@@ -3,12 +3,13 @@ function Jukebox() {
 	this.playlist = [];
 	this.place = 0; //which song in the playlist should play
 	this.isLoaded = false;
+	this.isPlaying = false;
+	this.isPaused = false;
 
 	this.queueSong = function(song) {
 		this.playlist.push(song);
 	}
-	
-	this.isPlaying = false;
+
 	this.playOrPause = function() {
 		if (this.isPlaying == false) {
 			if (this.isLoaded == false) {
@@ -17,12 +18,31 @@ function Jukebox() {
 			}
 			this.playlist[this.place].play();
 			this.isPlaying = true;
-			return "this should have played"
+			this.isPaused = false;
+			pauseStatus(this)
 		} else if (this.isLoaded == true) {
 			this.playlist[this.place].pause();
 			this.isPlaying = false;
-			return "this should have paused"
+			this.isPaused = true;
+			pauseStatus(this)
 		}
+	}
+
+	this.stop = function() {
+		document.getElementById("track").src = "";
+		this.isLoaded = false;
+		this.isPlaying = false;
+		this.isPaused = false;
+		pauseStatus(this)
+	}
+}
+
+function pauseStatus(jukeboxName) {
+	if (jukeboxName.isPaused) {
+		console.log("it is paused")
+		document.getElementById("playStatus").innerText = " paused"
+	} else {
+		document.getElementById("playStatus").innerText = " "
 	}
 }
 
@@ -53,7 +73,7 @@ function Song(name, filename, jukeboxName) {
 		var audioElement = document.getElementById("track")
 		audioElement.pause();
 
-		document.getElementById("songname").innerText = this.name + " paused";
+		document.getElementById("songname").innerText = this.name;
 	}
 }
 
@@ -66,4 +86,10 @@ uke = new Song("ukulele","assets/bensound-ukulele.mp3",juke);
 $(".glyphicon-play").click(function() {
 	juke.playOrPause();
 	$('.glyphicon-play').toggleClass('glyphicon-pause');
+});
+
+//stop button
+$(".glyphicon-stop").click(function() {
+	juke.stop();
+	$('.glyphicon-pause').removeClass('glyphicon-pause');
 });

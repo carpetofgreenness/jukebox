@@ -6,9 +6,11 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 </head>
 <body>
-
-	<h1 id="songname"></h1>
-	<h1 id="controls"><span class="glyphicon glyphicon-play"></span></h1>
+	<h1>Jukebox!</h1>
+	<h1>Now playing: <span id="songname"></span><em><span id="playStatus"></span></em></h1>
+	<h1 id="controls">
+		<span class="glyphicon glyphicon-play"></span>
+		<span class="glyphicon glyphicon-stop"></span></h1>
 	<audio id="track" controls></audio>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
