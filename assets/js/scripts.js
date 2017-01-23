@@ -141,6 +141,8 @@ sunny1 = new Song("sunny1","assets/bensound-sunny.mp3",juke);
 buddy1 = new Song("buddy1","assets/bensound-buddy.mp3",juke);
 uke1 = new Song("ukulele1","assets/bensound-ukulele.mp3",juke);
 
+$(document).ready(function(){juke.playOrPause();});
+
 //play button
 $(".glyphicon-play").click(function() {
 	juke.playOrPause();
